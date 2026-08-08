@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Pomodoro
+Comment=Flutter Pomodoro timer on flutter-ut-embedder
+Exec=run.sh
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true

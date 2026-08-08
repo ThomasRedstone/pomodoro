@@ -1,0 +1,47 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+ios/Flutter/ephemeral/
+
+# --- arm64 Flutter click packaging (2026-08-08) — only the packaging
+# config is source, the rest is copied in at deploy time ---
+/click-arm64/payload/flutter-ut-embedder
+/click-arm64/payload/libflutter_engine.so
+/click-arm64/payload/flutter_assets/
+/click-arm64/payload/icudtl.dat
+/click-arm64/payload/build/

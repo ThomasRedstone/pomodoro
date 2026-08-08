@@ -1,0 +1,15 @@
+{
+  "name": "pomodoro-flutter.tom",
+  "version": "0.1.1",
+  "framework": "$ENV{CLICK_FRAMEWORK}",
+  "maintainer": "Tom Redstone <redders@gmail.com>",
+  "title": "Pomodoro (Flutter)",
+  "description": "Pomodoro timer (github.com/jashdubal/pomodoro), running on flutter-ut-embedder.",
+  "architecture": "$ENV{ARCH}",
+  "hooks": {
+    "pomodoro-flutter": {
+      "apparmor": "pomodoro-flutter.apparmor",
+      "desktop": "pomodoro-flutter.desktop"
+    }
+  }
+}

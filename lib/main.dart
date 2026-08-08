@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hp/landing.dart';
-import 'package:window_manager/window_manager.dart';
-import 'dart:io';
-
-// Import the package required to fix window size window management
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
-
-  if (Platform.isMacOS) {
-    final windowManager = WindowManager.instance;
-    windowManager.setMinimumSize(const Size(1650, 1600));
-    windowManager.setMaximumSize(const Size(1650, 1600));
-  }
+  // window_manager's macOS-only sizing call (never true on this
+  // Linux/UT embedder) removed along with the dependency — see
+  // pubspec.yaml's comment.
 }
 
 

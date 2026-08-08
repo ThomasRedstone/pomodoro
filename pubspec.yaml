@@ -38,12 +38,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
   async: ^2.9.0
-  animated_snack_bar: ^0.3.0
+  animated_snack_bar: ^0.4.0
   shared_preferences: ^2.0.15
   intl: ^0.18.0
   badges: ^2.0.3
   rename: ^2.0.1
-  window_manager: ^0.0.1
+  # window_manager dropped: only used behind `Platform.isMacOS` in
+  # main.dart (never true on this Linux/UT embedder) and its Windows
+  # support library (win32 3.1.4) fails to compile against the current
+  # Dart SDK (`UnmodifiableUint8ListView` API removed) — dead weight
+  # for this target, not worth carrying.
+
 
 
 dev_dependencies:
@@ -98,3 +103,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+dependency_overrides:
+  # win32 3.1.4 (pulled in transitively by shared_preferences_windows/
+  # path_provider_windows — Windows support this Linux/UT target never
+  # exercises) fails to compile against the current Dart SDK
+  # (`UnmodifiableUint8ListView` was removed from `dart:typed_data`).
+  # Flutter still type-checks the whole dependency graph regardless of
+  # target platform, so a transitive-only, unreachable-at-runtime
+  # package can still break the build — override to a version built
+  # against a modern SDK.
+  win32: ^5.5.0
