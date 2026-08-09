@@ -23,7 +23,24 @@ if [ -n "$MIR_SERVER_WAYLAND_HOST" ]; then
     export XDG_RUNTIME_DIR="$(dirname "$MIR_SERVER_WAYLAND_HOST")"
     export WAYLAND_DISPLAY="$(basename "$MIR_SERVER_WAYLAND_HOST")"
 fi
-echo "[run.sh] MIR_SOCKET=$MIR_SOCKET MIR_SERVER_WAYLAND_HOST=$MIR_SERVER_WAYLAND_HOST XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR WAYLAND_DISPLAY=$WAYLAND_DISPLAY RUNTIME=$RUNTIME" >&2
+
+# 2026-08-08: click apps aren't launched with any particular cwd either
+# (and the install dir under /opt/click.ubuntu.com/ is read-only
+# anyway) — several plugins default to *relative* paths assuming a
+# writable cwd (found via OpenHIIT's `background_hiit_timer` plugin:
+# `sqflite_common_ffi`'s own default database path is the literal
+# relative path `.dart_tool/sqflite_common_ffi/databases`, which
+# doesn't exist and couldn't be created even if sqlite tried — it
+# doesn't auto-create missing parent directories, hence
+# SQLITE_CANTOPEN/"unable to open database file"). Give every app a
+# real, writable, guaranteed-to-exist cwd instead of leaving it to
+# chance — mirrors the install path under a writable cache root so
+# it's unique per app with no parsing needed.
+CWD_DIR="$HOME/.cache/flutter-ut-embedder-cwd$DIR"
+mkdir -p "$CWD_DIR"
+cd "$CWD_DIR" || true
+
+echo "[run.sh] MIR_SOCKET=$MIR_SOCKET MIR_SERVER_WAYLAND_HOST=$MIR_SERVER_WAYLAND_HOST XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR WAYLAND_DISPLAY=$WAYLAND_DISPLAY RUNTIME=$RUNTIME CWD=$(pwd)" >&2
 
 # libflutter_engine.so comes from the shared runtime click; native_assets
 # (e.g. sqflite_common_ffi's bundled libsqlite3.so) stays with THIS app,
